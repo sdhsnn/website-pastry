@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 //import model product
 use App\Models\Product; 
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ProductsImport;
+use App\Exports\ProductsExport;
+
+
 //import return type View
 use Illuminate\View\View;
 
@@ -206,4 +211,23 @@ class ProductController extends Controller
         //redirect to index
         return redirect()->route('products.index')->with(['success' => 'Data Berhasil Dihapus!']);
     }
+
+        // EXPORT PRODUCT
+    public function export()
+    {
+        return Excel::download(new ProductsExport, 'products.xlsx');
+    }
+
+    // IMPORT PRODUCT
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,csv,xls'
+        ]);
+
+        Excel::import(new ProductsImport, $request->file('file'));
+
+        return redirect()->route('products.index')->with(['success' => 'Data produk berhasil diimport!']);
+    }
+
 }

@@ -48,3 +48,5 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/users-import', [UserController::class, 'import']);
 Route::get('/users-export', [UserController::class, 'export']);
+Route::get('/products-export', [ProductController::class, 'export'])->name('products.export');
+Route::post('/products-import', [ProductController::class, 'import'])->name('products.import');

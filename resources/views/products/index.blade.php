@@ -4,7 +4,23 @@
 <div class="container mt-5" style="background-color:#f4ece2; min-height:80vh; padding:2rem; border-radius:0.5rem;">
     <div class="card border-0 shadow-sm rounded bg-[#f4ece2]">
         <div class="card-body">
-            <a href="{{ route('products.create') }}" class="btn btn-md text-white mb-3" style="background-color:#B38867;">ADD PRODUCT</a>
+
+            {{-- Bagian tombol di atas tabel --}}
+            <div class="d-flex justify-content-between mb-3">
+                <a href="{{ route('products.create') }}" class="btn btn-md text-white" style="background-color:#B38867;">ADD PRODUCT</a>
+
+                <div class="d-flex">
+                    <a href="{{ route('products.export') }}" class="btn btn-success me-2">Export Excel</a>
+
+                    <form action="{{ route('products.import') }}" method="POST" enctype="multipart/form-data" class="d-flex">
+                        @csrf
+                        <input type="file" name="file" required class="form-control me-2" style="max-width: 200px;">
+                        <button type="submit" class="btn btn-primary">Import Excel</button>
+                    </form>
+                </div>
+            </div>
+
+            {{-- Tabel products --}}
             <table class="table table-bordered bg-white">
                 <thead class="bg-[#B38867] text-white">
                     <tr>
@@ -49,7 +65,6 @@
 </div>
 
 <script>
-    // SweetAlert messages
     @if(session('success'))
         Swal.fire({
             icon: "success",
