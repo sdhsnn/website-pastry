@@ -68,7 +68,10 @@
                 <h2 class="text-lg font-bold text-gray-800 mb-2">{{ $product->title }}</h2>
                 <p class="text-gray-600 mb-1">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
                 <p class="text-gray-700 mb-2">Stok: {{ $product->stock }}</p>
-                <p class="text-gray-600 mb-4">{!! $product->description !!}</p>
+                <div class="text-black-600 mb-4 prose prose-lg max-w-none" style="text-align: justify; text-justify: inter-word;">
+                    {!! $product->description !!}
+                </div>
+
 
                 @if ($product->stock > 0)
                 <form method="POST" action="{{ route('cart.add') }}" class="mt-auto">

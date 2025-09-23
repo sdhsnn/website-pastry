@@ -22,10 +22,11 @@
 
             {{-- Tabel products --}}
             <table class="table table-bordered bg-white">
-                <thead class="bg-[#B38867] text-white">
+                <thead style="background-color:#B38867; color:white;">
                     <tr>
                         <th scope="col">IMAGE</th>
                         <th scope="col">TITLE</th>
+                        <th scope="col">DESCRIPTION</th>
                         <th scope="col">PRICE</th>
                         <th scope="col">STOCK</th>
                         <th scope="col" style="width: 20%">ACTIONS</th>
@@ -35,9 +36,13 @@
                     @forelse ($products as $product)
                         <tr>
                             <td class="text-center">
-                                <img src="{{ asset('/storage/products/'.$product->image) }}" class="rounded" style="width: 150px">
+                                <img src="{{ asset('/storage/products/'.$product->image) }}" 
+                                     class="rounded" style="width: 150px">
                             </td>
                             <td>{{ $product->title }}</td>
+                            <td style="max-width: 300px; max-height: 120px; overflow: auto; text-align: justify; padding:0.5rem;">
+                                {!! $product->description !!}
+                            </td>
                             <td>{{ "Rp " . number_format($product->price,2,',','.') }}</td>
                             <td>{{ $product->stock }}</td>
                             <td class="text-center">
@@ -52,7 +57,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center text-red-600">
+                            <td colspan="6" class="text-center text-danger">
                                 Data Products belum Tersedia.
                             </td>
                         </tr>
@@ -63,6 +68,20 @@
         </div>
     </div>
 </div>
+
+{{-- Custom Scrollbar untuk deskripsi --}}
+<style>
+    td::-webkit-scrollbar {
+        width: 6px;
+    }
+    td::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+    }
+    td::-webkit-scrollbar-track {
+        background: transparent;
+    }
+</style>
 
 <script>
     @if(session('success'))

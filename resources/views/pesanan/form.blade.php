@@ -79,22 +79,6 @@
                 @if($selectedProduct)
                     <input type="hidden" name="produk" value="{{ $selectedProduct->id }}">
                     <p class="font-semibold">{{ $selectedProduct->title }}</p>
-                @else
-                    <select
-                        name="produk"
-                        required
-                        class="w-full border border-gray-300 rounded px-4 py-2"
-                    >
-                        <option value="">-- Pilih Produk --</option>
-                        @foreach ($products as $product)
-                            <option
-                                value="{{ $product->id }}"
-                                {{ old('produk') == $product->id ? 'selected' : '' }}
-                            >
-                                {{ $product->title }}
-                            </option>
-                        @endforeach
-                    </select>
                 @endif
             @else
                 <select
@@ -115,25 +99,24 @@
             @endif
         </div>
 
-        <!-- Jumlah -->
+        <!-- Jumlah otomatis dari menu -->
         <div>
-    <label class="block font-semibold mb-1">Jumlah:</label>
-    <input
-        type="number"
-        name="jumlah"
-        value="{{ old('jumlah') }}"
-        min="1"
-        class="w-full border border-gray-300 p-2 rounded"
-        required
-    />
-    @error('jumlah')
-        <p class="text-red-600 mt-1">{{ $message }}</p>
-    @enderror
-</div>
-
+            <label class="block font-semibold mb-1">Jumlah:</label>
+            <input
+                type="number"
+                name="jumlah"
+                value="{{ request('quantity', old('jumlah', 1)) }}" {{-- ambil dari query ?quantity=... --}}
+                min="1"
+                class="w-full border border-gray-300 p-2 rounded"
+                required
+            />
+            @error('jumlah')
+                <p class="text-red-600 mt-1">{{ $message }}</p>
+            @enderror
+        </div>
 
         <!-- Tombol Kirim -->
-        <div class="text-center pt-4">
+        <div class="text-center pt-4 flex gap-3 justify-center">
             <button
                 type="submit"
                 class="bg-[#b38867] text-white font-medium py-2 px-6 rounded-full hover:bg-[#9d7352] transition duration-300"
@@ -141,9 +124,9 @@
                 Kirim Pesanan
             </button>
             <a href="{{ url('menuproduk') }}"
-           class="bg-[#b38867] text-white font-medium py-2 px-6 rounded-full hover:bg-[#9d7352] transition duration-300"">
-            Kembali ke Menu Produk
-        </a>
+               class="bg-[#b38867] text-white font-medium py-2 px-6 rounded-full hover:bg-[#9d7352] transition duration-300">
+                Kembali ke Menu Produk
+            </a>
         </div>
     </form>
 </div>
